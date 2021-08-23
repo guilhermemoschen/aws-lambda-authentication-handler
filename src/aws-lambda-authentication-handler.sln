@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31515.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moschen.AwsLambdaAuthenticationHandler", "Moschen.AwsLambdaAuthenticationHandler\Moschen.AwsLambdaAuthenticationHandler.csproj", "{8974C608-3F21-48CE-BF34-4585648516C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moschen.AwsLambdaAuthenticationHandler.UnitTests", "Moschen.AwsLambdaAuthenticationHandler.UnitTests\Moschen.AwsLambdaAuthenticationHandler.UnitTests.csproj", "{7A30006D-98B4-4159-B617-A31B60DFCA57}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moschen.AwsLambdaAuthenticationHandler.Sample", "Moschen.AwsLambdaAuthenticationHandler.Sample\Moschen.AwsLambdaAuthenticationHandler.Sample.csproj", "{C87F5CC1-2FA9-48F0-9802-CDFB7DDA9B7B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8974C608-3F21-48CE-BF34-4585648516C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8974C608-3F21-48CE-BF34-4585648516C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8974C608-3F21-48CE-BF34-4585648516C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8974C608-3F21-48CE-BF34-4585648516C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A30006D-98B4-4159-B617-A31B60DFCA57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A30006D-98B4-4159-B617-A31B60DFCA57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A30006D-98B4-4159-B617-A31B60DFCA57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A30006D-98B4-4159-B617-A31B60DFCA57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C87F5CC1-2FA9-48F0-9802-CDFB7DDA9B7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C87F5CC1-2FA9-48F0-9802-CDFB7DDA9B7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C87F5CC1-2FA9-48F0-9802-CDFB7DDA9B7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C87F5CC1-2FA9-48F0-9802-CDFB7DDA9B7B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D0EA5C2E-740C-4F39-8EE9-7A52CCC79AE4}
+	EndGlobalSection
+EndGlobal
