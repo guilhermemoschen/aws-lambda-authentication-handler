@@ -12,11 +12,20 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: Sandbox 
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '5.0.x'
+        source-url: https://api.nuget.org/v3/index.json
+    
+    - name: Build and Pack
       run: |
         TAG=$(echo $GITHUB_REF | cut -c 11-)
-        echo "Deploying to Nuget server version '$TAG'"
         dotnet build src/Moschen.AwsLambdaAuthenticationHandler/Moschen.AwsLambdaAuthenticationHandler.csproj -c Release -p:Version=$TAG
-        dotnet pack src/Moschen.AwsLambdaAuthenticationHandler/Moschen.AwsLambdaAuthenticationHandler.csproj -c Release -o . --no-build -p:PackageVersion=$TAG
+        dotnet pack src/Moschen.AwsLambdaAuthenticationHandler/Moschen.AwsLambdaAuthenticationHandler.csproj -c Release --no-build -p:PackageVersion=$TAG
         dotnet nuget push Moschen.AwsLambdaAuthenticationHandler.$TAG.nupkg --skip-duplicate --api-key $NUGET_KEY
+    
+    - name: Publish the package to nuget.org
+      run: dotnet nuget push */bin/Release/*.nupkg -k $NUGET_AUTH_TOKEN -s https://api.nuget.org/v3/index.json
+      env:
+        NUGET_AUTH_TOKEN: $NUGET_KEY
     
