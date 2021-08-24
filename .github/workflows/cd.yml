@@ -12,4 +12,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - run: echo "Deploying to production server on branch $GITHUB_REF"
+    - run: |
+      tag=$(echo $GITHUB_REF | cut -c 9-)
+      echo "Deploying to production server on branch $tag"
