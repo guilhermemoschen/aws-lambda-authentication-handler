@@ -14,6 +14,6 @@ jobs:
     
     - name: Sandbox 
       env:
-        TAG: ${{ echo $GITHUB_REF | cut -c 9- }}
+        TAG: ${{ $GITHUB_REF | cut -c 9- }}
       run: |
         echo "Deploying to production server on branch $TAG"
