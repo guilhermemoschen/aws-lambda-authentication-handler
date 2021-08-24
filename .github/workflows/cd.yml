@@ -14,5 +14,9 @@ jobs:
     
     - name: Sandbox 
       run: |
-        TAG=$(echo $GITHUB_REF | cut -c 9-)
-        echo "Deploying to production server on branch $TAG"
+        TAG=$(echo $GITHUB_REF | cut -c 11-)
+        echo "Deploying to Nuget server version '$TAG'"
+        dotnet build src/Moschen.AwsLambdaAuthenticationHandler/Moschen.AwsLambdaAuthenticationHandler.csproj -c Release -p:Version=$TAG
+        dotnet pack src/Moschen.AwsLambdaAuthenticationHandler/Moschen.AwsLambdaAuthenticationHandler.csproj -c Release -o packages --no-build -p:PackageVersion=$TAG
+        cd packages
+        dotnet nuget push "*.nupkg" -k $NUGET_KEY -s https://api.nuget.org/v3/index.json
