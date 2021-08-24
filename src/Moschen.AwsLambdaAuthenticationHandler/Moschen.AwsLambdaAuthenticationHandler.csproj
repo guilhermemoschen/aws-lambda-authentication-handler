@@ -13,7 +13,7 @@
     <RepositoryUrl>https://github.com/guilhermemoschen/aws-lambda-authentication-handler</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>aws amazon lambda authentication</PackageTags>
-    <PackageReleaseNotes>Release notes are at https://github.com/guilhermemoschen/aws-lambda-authentication-handler/releases</PackageReleaseNotes>
+    <PackageReleaseNotes>Release notes are at https://github.com/guilhermemoschen/aws-lambda-authentication-handler/releases/tag/$(PackageVersion)</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
