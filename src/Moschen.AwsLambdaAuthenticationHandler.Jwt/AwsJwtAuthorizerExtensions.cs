@@ -1,15 +1,15 @@
 ﻿using System;
 using Microsoft.AspNetCore.Authentication;
-using Moschen.AwsLambdaAuthenticationHandler;
+using Moschen.AwsLambdaAuthenticationHandler.Jwt;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection
 {
-    public static class JwtAuthorizerExtensions
+    public static class AwsJwtAuthorizerExtensions
     {
         public static AuthenticationBuilder AddJwtAuthorizer(this AuthenticationBuilder builder)
         {
-            return AddJwtAuthorizerInternal(builder, JwtAuthorizerDefaults.AuthenticationScheme);
+            return AddJwtAuthorizerInternal(builder, AwsJwtAuthorizerDefaults.AuthenticationScheme);
         }
 
         public static AuthenticationBuilder AddJwtAuthorizer(this AuthenticationBuilder builder, string authenticationScheme)
@@ -19,15 +19,15 @@ namespace Microsoft.Extensions.DependencyInjection
 
         public static AuthenticationBuilder AddJwtAuthorizer(
             this AuthenticationBuilder builder, 
-            Action<AuthenticationSchemeOptions> configureOptions)
+            Action<AwsJwtAuthorizerAuthenticationSchemeOptions> configureOptions)
         {
-            return AddJwtAuthorizerInternal(builder, JwtAuthorizerDefaults.AuthenticationScheme, configureOptions);
+            return AddJwtAuthorizerInternal(builder, AwsJwtAuthorizerDefaults.AuthenticationScheme, configureOptions);
         }
 
         public static AuthenticationBuilder AddJwtAuthorizer(
             this AuthenticationBuilder builder,
             string authenticationScheme,
-            Action<AuthenticationSchemeOptions> configureOptions)
+            Action<AwsJwtAuthorizerAuthenticationSchemeOptions> configureOptions)
         {
             return AddJwtAuthorizerInternal(builder, authenticationScheme, configureOptions);
         }
@@ -35,10 +35,10 @@ namespace Microsoft.Extensions.DependencyInjection
         private static AuthenticationBuilder AddJwtAuthorizerInternal(
             this AuthenticationBuilder builder, 
             string? authenticationScheme = null,
-            Action<AuthenticationSchemeOptions>? configureOptions = null)
+            Action<AwsJwtAuthorizerAuthenticationSchemeOptions>? configureOptions = null)
         {
             return builder
-                .AddScheme<AuthenticationSchemeOptions, JwtAuthorizerAuthenticationHandler>(
+                .AddScheme<AwsJwtAuthorizerAuthenticationSchemeOptions, AwsJwtAuthorizerAuthenticationHandler>(
                     authenticationScheme,
                     configureOptions);
         }

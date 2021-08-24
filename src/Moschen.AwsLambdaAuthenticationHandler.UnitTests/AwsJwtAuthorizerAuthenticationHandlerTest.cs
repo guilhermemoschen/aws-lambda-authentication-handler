@@ -13,15 +13,15 @@ using Microsoft.Extensions.Options;
 using Microsoft.Extensions.WebEncoders.Testing;
 using Microsoft.IdentityModel.Tokens;
 using Moq;
+using Moschen.AwsLambdaAuthenticationHandler.Jwt;
 using Serilog.Extensions.Logging;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Moschen.AwsLambdaAuthenticationHandler.UnitTests
 {
-    public class JwtAuthorizerAuthenticationHandlerTest : UnitTest
+    public class AwsJwtAuthorizerAuthenticationHandlerTest : UnitTest
     {
-        private readonly JwtAuthorizerAuthenticationHandler _target;
         private ClaimsIdentity SampleClaimsIdentity => new ClaimsIdentity(
             new[]
             {
@@ -29,34 +29,29 @@ namespace Moschen.AwsLambdaAuthenticationHandler.UnitTests
                 new Claim(ClaimTypes.Email, "email@any.com"),
                 new Claim("custom-claim", "custom value"),
             },
-            JwtAuthorizerDefaults.AuthenticationScheme);
+            AwsJwtAuthorizerDefaults.AuthenticationScheme);
 
-        public JwtAuthorizerAuthenticationHandlerTest(ITestOutputHelper output) : base(output)
+        public AwsJwtAuthorizerAuthenticationHandlerTest(ITestOutputHelper output) : base(output)
         {
-            var optionsMonitorMock = new Mock<IOptionsMonitor<AuthenticationSchemeOptions>>(MockBehavior.Strict);
-            optionsMonitorMock
-                .Setup(mock => mock.Get(It.IsAny<string>()))
-                .Returns(new AuthenticationSchemeOptions());
-            _target = new JwtAuthorizerAuthenticationHandler(optionsMonitorMock.Object,
-                new LoggerFactory(new[] { new SerilogLoggerProvider(Logger) }),
-                new UrlTestEncoder(),
-                new SystemClock());
         }
 
         [Fact]
         public async Task AuthenticateAsync_ExistingClaims_Authenticate()
         {
             // Arrange
-            await SetupMocks(SampleClaimsIdentity);
+            var target = await CreateTargetAsync(
+                new AwsJwtAuthorizerAuthenticationSchemeOptions() { RequireToken = false, ExtractClaimsFromToken = false },
+                SampleClaimsIdentity);
 
             // Act
-            var result = await _target.AuthenticateAsync();
+            var result = await target.AuthenticateAsync();
 
             // Assert
             using (new AssertionScope())
             {
                 result.Should().NotBeNull();
                 result.Succeeded.Should().BeTrue();
+                result.Ticket.AuthenticationScheme.Should().Be(AwsJwtAuthorizerDefaults.AuthenticationScheme);
                 foreach (var expectedClaim in SampleClaimsIdentity.Claims)
                 {
                     result.Principal.Claims.Should()
@@ -70,16 +65,19 @@ namespace Moschen.AwsLambdaAuthenticationHandler.UnitTests
         {
             // Arrange
             var token = GenerateToken(SampleClaimsIdentity);
-            await SetupMocks(token);
+            var target = await CreateTargetAsync(
+                new AwsJwtAuthorizerAuthenticationSchemeOptions() { RequireToken = true, ExtractClaimsFromToken = true },
+                token: token);
 
             // Act
-            var result = await _target.AuthenticateAsync();
+            var result = await target.AuthenticateAsync();
 
             // Assert
             using (new AssertionScope())
             {
                 result.Should().NotBeNull();
                 result.Succeeded.Should().BeTrue();
+                result.Ticket.AuthenticationScheme.Should().Be(AwsJwtAuthorizerDefaults.AuthenticationScheme);
                 foreach (var expectedClaim in SampleClaimsIdentity.Claims)
                 {
                     result.Principal.Claims.Should()
@@ -102,22 +100,32 @@ namespace Moschen.AwsLambdaAuthenticationHandler.UnitTests
             {
                 httpContext.Request.Headers.Add("Authorization", authorizationHeader);
             }
-            
-            await _target.InitializeAsync(
+
+            var optionsMonitorMock = new Mock<IOptionsMonitor<AwsJwtAuthorizerAuthenticationSchemeOptions>>(MockBehavior.Strict);
+            optionsMonitorMock
+                .Setup(mock => mock.Get(It.IsAny<string>()))
+                .Returns(new AwsJwtAuthorizerAuthenticationSchemeOptions());
+            var target = new AwsJwtAuthorizerAuthenticationHandler(optionsMonitorMock.Object,
+                new LoggerFactory(new[] { new SerilogLoggerProvider(Logger) }),
+                new UrlTestEncoder(),
+                new SystemClock());
+
+            await target.InitializeAsync(
                 new AuthenticationScheme(
-                    JwtAuthorizerDefaults.AuthenticationScheme,
+                    AwsJwtAuthorizerDefaults.AuthenticationScheme,
                     null,
-                    typeof(JwtAuthorizerAuthenticationHandler)),
+                    typeof(AwsJwtAuthorizerAuthenticationHandler)),
                 httpContext);
 
             // Act
-            var result = await _target.AuthenticateAsync();
+            var result = await target.AuthenticateAsync();
 
             // Assert
             using (new AssertionScope())
             {
                 result.Should().NotBeNull();
                 result.Succeeded.Should().BeFalse();
+                result.Ticket.Should().BeNull();
             }
         }
 
@@ -142,28 +150,39 @@ namespace Moschen.AwsLambdaAuthenticationHandler.UnitTests
                 new SigningCredentials(new RsaSecurityKey(RSA.Create(2048)), SecurityAlgorithms.RsaSsaPssSha256));
         }
 
-        private async Task SetupMocks(string token)
+        private async Task<AwsJwtAuthorizerAuthenticationHandler> CreateTargetAsync(
+            AwsJwtAuthorizerAuthenticationSchemeOptions options = null,
+            ClaimsIdentity claimsIdentity = null,
+            string token = null)
         {
+            var optionsMonitorMock = new Mock<IOptionsMonitor<AwsJwtAuthorizerAuthenticationSchemeOptions>>(MockBehavior.Strict);
+            optionsMonitorMock
+                .Setup(mock => mock.Get(It.IsAny<string>()))
+                .Returns(options ?? new AwsJwtAuthorizerAuthenticationSchemeOptions());
+            var target = new AwsJwtAuthorizerAuthenticationHandler(optionsMonitorMock.Object,
+                new LoggerFactory(new[] { new SerilogLoggerProvider(Logger) }),
+                new UrlTestEncoder(),
+                new SystemClock());
+
             var httpContext = new DefaultHttpContext();
-            httpContext.Request.Headers.Add("Authorization", $"Bearer {token}");
+            if (claimsIdentity != null)
+            {
+                httpContext.User = new ClaimsPrincipal(SampleClaimsIdentity);
+            }
 
-            await _target.InitializeAsync(
-                new AuthenticationScheme(
-                    JwtAuthorizerDefaults.AuthenticationScheme,
-                    null,
-                    typeof(JwtAuthorizerAuthenticationHandler)),
-                httpContext);
-        }
+            if (!string.IsNullOrWhiteSpace(token))
+            {
+                httpContext.Request.Headers.Add("Authorization", $"Bearer {token}");
+            }
 
-        private async Task SetupMocks(ClaimsIdentity claimsIdentity)
-        {
-            var httpContext = new DefaultHttpContext { User = new ClaimsPrincipal(claimsIdentity) };
-            await _target.InitializeAsync(
+            await target.InitializeAsync(
                 new AuthenticationScheme(
-                    JwtAuthorizerDefaults.AuthenticationScheme,
+                    AwsJwtAuthorizerDefaults.AuthenticationScheme,
                     null,
-                    typeof(JwtAuthorizerAuthenticationHandler)),
+                    typeof(AwsJwtAuthorizerAuthenticationHandler)),
                 httpContext);
+
+            return target;
         }
     }
 }

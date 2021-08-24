@@ -1,13 +1,23 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>enable</Nullable>
+    <PackageId>Moschen.AwsLambdaAuthenticationHandler</PackageId>
+    <Authors>Guilherme Moschen</Authors>
+    <Product />
+    <Description>Pending</Description>
+    <Copyright>Copyright (C) Guilherme Moschen</Copyright>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/guilhermemoschen/aws-lambda-authentication-handler</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/guilhermemoschen/aws-lambda-authentication-handler</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>aws amazon lambda authentication</PackageTags>
+    <PackageReleaseNotes>Release notes are at https://github.com/guilhermemoschen/aws-lambda-authentication-handler/releases</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.12.1" />
   </ItemGroup>
 
 </Project>

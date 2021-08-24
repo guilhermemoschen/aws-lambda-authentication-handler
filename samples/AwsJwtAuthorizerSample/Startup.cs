@@ -52,8 +52,8 @@ namespace Moschen.AwsLambdaAuthenticationHandler.Sample
                     });
             });
 
-            services.AddAuthentication(JwtAuthorizerDefaults.AuthenticationScheme)
-                .AddJwtAuthorizer();
+            services.AddAuthentication(AwsAuthorizerDefaults.AuthenticationScheme)
+                .AddAwsAuthorizer();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
