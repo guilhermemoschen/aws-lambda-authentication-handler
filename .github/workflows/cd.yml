@@ -1,4 +1,4 @@
-name: .NET
+name: Continuous Delivery
 
 on:
   release:
