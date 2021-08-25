@@ -25,7 +25,7 @@ namespace AwsAuthorizerSample
 
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Moschen.AwsLambdaAuthenticationHandler.Sample", Version = "v1" });
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "AwsAuthorizerSample", Version = "v1" });
             });
 
             services.AddAuthentication(AwsAuthorizerDefaults.AuthenticationScheme)
@@ -34,12 +34,9 @@ namespace AwsAuthorizerSample
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Moschen.AwsLambdaAuthenticationHandler.Sample v1"));
-            }
+            app.UseDeveloperExceptionPage();
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("v1/swagger.json", "AwsAuthorizerSample v1"));
 
             app.UseHttpsRedirection();
 
