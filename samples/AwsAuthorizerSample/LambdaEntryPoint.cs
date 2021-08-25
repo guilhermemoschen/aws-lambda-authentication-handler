@@ -1,14 +1,15 @@
-using System;
+using Amazon.Lambda.AspNetCoreServer;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
 
-namespace AwsJwtAuthorizerSample
+namespace AwsAuthorizerSample
 {
-    public class Program
+    public class LambdaEntryPoint : APIGatewayHttpApiV2ProxyFunction
     {
-        public static void Main(string[] args)
+        protected override void Init(IHostBuilder builder)
         {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
@@ -18,27 +19,21 @@ namespace AwsJwtAuthorizerSample
                 .WriteTo.Console(outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
                 .CreateLogger();
 
-            try
-            {
-                Log.Information("Logger initialized");
-                CreateHostBuilder(args).Build().Run();
-            }
-            catch (Exception exception)
-            {
-                Log.Fatal(exception, "Host terminated unexpectedly");
-            }
-            finally
-            {
-                Log.CloseAndFlush();
-            }
-        }
+            Log.Information("Logger initialized");
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
+            builder
+                .ConfigureAppConfiguration((builderContext, config) =>
+                {
+                    var env = builderContext.HostingEnvironment;
+                    config.SetBasePath(env.ContentRootPath);
+                    config.AddEnvironmentVariables();
+                })
                 .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder
+                        .UseStartup<Startup>();
                 });
+        }
     }
 }

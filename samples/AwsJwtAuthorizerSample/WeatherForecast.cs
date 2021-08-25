@@ -1,6 +1,6 @@
 using System;
 
-namespace Moschen.AwsLambdaAuthenticationHandler.Sample
+namespace AwsJwtAuthorizerSample
 {
     public class WeatherForecast
     {

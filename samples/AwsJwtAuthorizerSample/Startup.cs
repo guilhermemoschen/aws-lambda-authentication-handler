@@ -5,8 +5,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Moschen.AwsLambdaAuthenticationHandler.Jwt;
 
-namespace Moschen.AwsLambdaAuthenticationHandler.Sample
+namespace AwsJwtAuthorizerSample
 {
     public class Startup
     {
@@ -24,7 +25,7 @@ namespace Moschen.AwsLambdaAuthenticationHandler.Sample
 
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Moschen.AwsLambdaAuthenticationHandler.Sample", Version = "v1" });
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "AwsJwtAuthorizerSample", Version = "v1" });
                 options.AddSecurityDefinition(
                     "Bearer",
                     new OpenApiSecurityScheme
@@ -52,8 +53,12 @@ namespace Moschen.AwsLambdaAuthenticationHandler.Sample
                     });
             });
 
-            services.AddAuthentication(AwsAuthorizerDefaults.AuthenticationScheme)
-                .AddAwsAuthorizer();
+            services.AddAuthentication(AwsJwtAuthorizerDefaults.AuthenticationScheme)
+                .AddJwtAuthorizer(options =>
+                {
+                    options.ExtractClaimsFromToken = true;
+                    options.RequireToken = true;
+                });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -62,7 +67,7 @@ namespace Moschen.AwsLambdaAuthenticationHandler.Sample
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Moschen.AwsLambdaAuthenticationHandler.Sample v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AwsJwtAuthorizerSample v1"));
             }
 
             app.UseHttpsRedirection();

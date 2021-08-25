@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Moschen.AwsLambdaAuthenticationHandler.Sample.Controllers
+namespace AwsJwtAuthorizerSample.Controllers
 {
     [ApiController]
     [Route("[controller]")]
