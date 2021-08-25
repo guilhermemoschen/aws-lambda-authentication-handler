@@ -21,6 +21,8 @@ jobs:
         TAG=$(echo $GITHUB_REF | cut -c 11-)
         dotnet build src/Moschen.AwsLambdaAuthenticationHandler/Moschen.AwsLambdaAuthenticationHandler.csproj -c Release -p:Version=$TAG
         dotnet pack src/Moschen.AwsLambdaAuthenticationHandler/Moschen.AwsLambdaAuthenticationHandler.csproj -c Release -o ./ --no-build -p:PackageVersion=$TAG
+        dotnet build src/Moschen.AwsLambdaAuthenticationHandler.Jwt/Moschen.AwsLambdaAuthenticationHandler.Jwt.csproj -c Release -p:Version=$TAG
+        dotnet pack src/Moschen.AwsLambdaAuthenticationHandler.Jwt/Moschen.AwsLambdaAuthenticationHandler.Jwt.csproj -c Release -o ./ --no-build -p:PackageVersion=$TAG
     
     - name: Publish the package to nuget.org
       run: dotnet nuget push *.nupkg -k $NUGET_AUTH_TOKEN -s https://api.nuget.org/v3/index.json
