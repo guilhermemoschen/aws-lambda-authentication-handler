@@ -7,11 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moschen.AwsLambdaAuthentica
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moschen.AwsLambdaAuthenticationHandler.UnitTests", "Moschen.AwsLambdaAuthenticationHandler.UnitTests\Moschen.AwsLambdaAuthenticationHandler.UnitTests.csproj", "{7A30006D-98B4-4159-B617-A31B60DFCA57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moschen.AwsLambdaAuthenticationHandler.Jwt", "Moschen.AwsLambdaAuthenticationHandler.Jwt\Moschen.AwsLambdaAuthenticationHandler.Jwt.csproj", "{C446F803-ED9C-4B05-882D-1D7087B1426A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AwsAuthorizerSample", "..\samples\AwsAuthorizerSample\AwsAuthorizerSample.csproj", "{077DC7F1-C527-47A8-B1E4-E3EBCC227977}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AwsJwtAuthorizerSample", "..\samples\AwsJwtAuthorizerSample\AwsJwtAuthorizerSample.csproj", "{EBABA3BA-80EA-4233-A6C8-2A439961D08E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moschen.AwsLambdaAuthenticationHandler.Jwt", "Moschen.AwsLambdaAuthenticationHandler.Jwt\Moschen.AwsLambdaAuthenticationHandler.Jwt.csproj", "{C446F803-ED9C-4B05-882D-1D7087B1426A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,14 +27,6 @@ Global
 		{C446F803-ED9C-4B05-882D-1D7087B1426A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C446F803-ED9C-4B05-882D-1D7087B1426A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C446F803-ED9C-4B05-882D-1D7087B1426A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{077DC7F1-C527-47A8-B1E4-E3EBCC227977}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{077DC7F1-C527-47A8-B1E4-E3EBCC227977}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{077DC7F1-C527-47A8-B1E4-E3EBCC227977}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{077DC7F1-C527-47A8-B1E4-E3EBCC227977}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EBABA3BA-80EA-4233-A6C8-2A439961D08E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EBABA3BA-80EA-4233-A6C8-2A439961D08E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EBABA3BA-80EA-4233-A6C8-2A439961D08E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EBABA3BA-80EA-4233-A6C8-2A439961D08E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

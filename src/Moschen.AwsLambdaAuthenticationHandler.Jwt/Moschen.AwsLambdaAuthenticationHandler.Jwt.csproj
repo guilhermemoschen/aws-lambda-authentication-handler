@@ -6,7 +6,8 @@
     <PackageId>Moschen.AwsLambdaAuthenticationHandler.Jwt</PackageId>
     <Authors>Guilherme Moschen</Authors>
     <Product />
-    <Description>Pending...</Description>
+    <Description>Simple library to enable ASP.NET Core authentication and authorization to AspNetCoreServer. This library is necessary to let ASP.NET Core runtime understand that the user is already authenticated by AWS API Gateway and all claims are already created. With that, it's possible to use regular authorization features from ASP.NET Core like [Authorize] and AuthorizationPolicy. 
+      JWT distribution allow token validtion and claims extraction.</Description>
     <Copyright>Copyright (C) Guilherme Moschen</Copyright>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/guilhermemoschen/aws-lambda-authentication-handler</PackageProjectUrl>
