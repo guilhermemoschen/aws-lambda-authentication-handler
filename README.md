@@ -15,10 +15,10 @@ public void ConfigureServices(IServiceCollection services)
     services.AddAuthentication(AwsJwtAuthorizerDefaults.AuthenticationScheme)
       .AddJwtAuthorizer(options =>
       {
-          // In the case of local run, this option enables the extraction of claims from the Id Token
+          // In the case of local run, this option enables the extraction of claims from the token
           options.ExtractClaimsFromToken = true;
           
-          // Validates the presence of the token.
+          // Validates the presence of the token
           options.RequireToken = true;
       });
 }
