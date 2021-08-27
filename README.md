@@ -1,3 +1,9 @@
+[![Continuous Integration](https://github.com/guilhermemoschen/aws-lambda-authentication-handler/actions/workflows/ci.yml/badge.svg)](https://github.com/guilhermemoschen/aws-lambda-authentication-handler/actions/workflows/ci.yml)
+[![](https://img.shields.io/github/v/release/guilhermemoschen/aws-lambda-authentication-handler)](https://github.com/guilhermemoschen/aws-lambda-authentication-handler/releases/latest)
+[![](https://img.shields.io/nuget/dt/Moschen.AwsLambdaAuthenticationHandler)](https://www.nuget.org/packages/Moschen.AwsLambdaAuthenticationHandler)
+[![](https://img.shields.io/librariesio/sourcerank/nuget/Moschen.AwsLambdaAuthenticationHandler)](https://libraries.io/nuget/Moschen.AwsLambdaAuthenticationHandler)
+
+
 # aws-lambda-authentication-handler
 A simple library to enable ASP.NET Core [authentication and authorization](https://docs.microsoft.com/en-us/aspnet/core/security) to [AspNetCoreServer](https://github.com/aws/aws-lambda-dotnet/tree/master/Libraries/src/Amazon.Lambda.AspNetCoreServer).
 This library is necessary to let ASP.NET Core runtime understand that the user is already authenticated by AWS API Gateway, and all claims are already created. With that, it's possible to use regular authorization features from ASP.NET Core like `[Authorize]` and `AuthorizationPolicy`.
